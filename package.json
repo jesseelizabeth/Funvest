@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server",
     "build-client-watch": "webpack -w",
     "start-server": "nodemon server",
     "start-dev": "npm run build-client-watch & npm run start-server",
-    "seed": "node seed.js",
+    "seed": "node script/seed.js",
+    "deploy": "script/deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
