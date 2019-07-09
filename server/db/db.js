@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const databaseName = 'TTP-FS';
+const databaseName = 'Funvest';
 
 const db = new Sequelize(`postgres://localhost:5432/${databaseName}`, {
   logging: false,

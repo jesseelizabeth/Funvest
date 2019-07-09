@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store/user';
+import Search from './Search';
 
 class Navbar extends Component {
   constructor() {
@@ -18,17 +19,17 @@ class Navbar extends Component {
         <nav>
           {isLoggedIn ? (
             <div className="nav-wrapper teal accent-4">
-              <ul id="nav-mobile" className="right hide-on-med-and-down">
-                <li>
-                  <Link to="/home">Home</Link>
-                </li>
+              <Link to="/home" className="brand-logo">
+                Funvest
+              </Link>
+              {/* 
+              <div className="row">
+                <div className="col l6 offset-l3">
+                  <Search />
+                </div>
+              </div> */}
 
-                <li>
-                  <Link to="/portfolio">Portfolio</Link>
-                </li>
-                <li>
-                  <Link to="/transactions">Transactions</Link>
-                </li>
+              <ul id="nav-mobile" className="right hide-on-med-and-down">
                 <li>
                   <a href="#" onClick={this.handleClick}>
                     Logout

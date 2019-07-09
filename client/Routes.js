@@ -6,8 +6,8 @@ import {
   Signup,
   UserHome,
   StockInfo,
-  Transactions,
-  Portfolio,
+  GameDashboard,
+  StockDashboard,
 } from './components';
 import { me } from './store/user';
 
@@ -24,8 +24,8 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={UserHome} />
-            <Route path="/portfolio" component={Portfolio} />
-            <Route path="/transactions" component={Transactions} />
+            <Route path="/quote/:symbol" component={StockDashboard} />
+            <Route path="/games/:id" component={GameDashboard} />
           </Switch>
         ) : (
           <Route component={Login} />

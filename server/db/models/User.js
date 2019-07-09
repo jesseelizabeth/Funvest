@@ -28,10 +28,6 @@ const User = db.define('user', {
       return () => this.getDataValue('salt');
     },
   },
-  balance: {
-    type: Sequelize.DECIMAL(10, 2),
-    defaultValue: 5000,
-  },
 });
 
 module.exports = User;

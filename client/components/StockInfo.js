@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Buy from './Buy';
 import { getColor } from '../../utils';
+import { getQuote } from '../store/stockQuote';
+import LoadingScreen from './LoadingScreen';
 
 class StockInfo extends Component {
   constructor() {
@@ -11,8 +14,10 @@ class StockInfo extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
   }
-  componentDidMount() {
-    const { open, latestPrice } = this.props;
+  async componentDidMount() {
+    const { symbol } = this.props;
+    await this.props.getQuote(symbol);
+    const { open, latestPrice } = this.props.stock;
     const color = getColor(open, latestPrice);
     this.setState({ color });
   }
@@ -30,34 +35,52 @@ class StockInfo extends Component {
       latestPrice,
       change,
       changePercent,
-    } = this.props;
+      loading,
+    } = this.props.stock;
+    if (loading) return <LoadingScreen />;
     return (
-      <div className="z-depth-1">
-        <div className="section">
-          <h5 className={this.state.color}>{companyName}</h5>
-          <h5 className={this.state.color}>${latestPrice.toFixed(2)}</h5>
-
+      <div className="row">
+        <div className="col l6 offset-l3">
           <div>
-            ${change.toFixed(2)} ({changePercent.toFixed(2)}%)
+            <div className="section center-align">
+              <h5 className={this.state.color}>{companyName}</h5>
+              <h5 className={this.state.color}>${latestPrice}</h5>
+
+              <div>
+                ${change} ({changePercent}%)
+              </div>
+            </div>
+            <div className="divider" />
+            <div className="section center-align">
+              {this.state.buy ? (
+                <Buy symbol={symbol} price={latestPrice} />
+              ) : (
+                <button
+                  type="button"
+                  className="teal accent-3 btn-small"
+                  onClick={this.handleClick}
+                >
+                  Buy {symbol}
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="divider" />
-        <div className="section">
-          {this.state.buy ? (
-            <Buy symbol={symbol} price={latestPrice} />
-          ) : (
-            <button
-              type="button"
-              className="teal accent-3 btn-small"
-              onClick={this.handleClick}
-            >
-              Buy {symbol}
-            </button>
-          )}
         </div>
       </div>
     );
   }
 }
 
-export default StockInfo;
+const mapState = state => ({
+  loading: state.stockQuote.loading,
+  stock: state.stockQuote.quote,
+});
+
+const mapDispatch = {
+  getQuote,
+};
+
+export default connect(
+  mapState,
+  mapDispatch
+)(StockInfo);

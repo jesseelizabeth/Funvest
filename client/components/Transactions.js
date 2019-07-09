@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchTransactions } from '../store/transactions';
 import TransactionListView from './TransactionListView';
 import LoadingScreen from './LoadingScreen';
 
 class Transactions extends Component {
-  componentDidMount() {
-    this.props.fetchTransactions();
-  }
   render() {
     const { transactions, loading } = this.props;
     if (loading) return <LoadingScreen />;
@@ -19,7 +15,7 @@ class Transactions extends Component {
               <div className="col m2 bold">Transaction</div>
               <div className="col m2 bold">Ticker</div>
               <div className="col m2 bold">Shares</div>
-              <div className="col m2 bold">Purchased Price</div>
+              <div className="col m2 bold">Price</div>
             </div>
           </div>
           {transactions.map(transaction => (
@@ -39,15 +35,8 @@ class Transactions extends Component {
 }
 
 const mapState = state => ({
-  transactions: state.transactions.all,
-  loading: state.transactions.loading,
+  transactions: state.portfolio.transactions,
+  loading: state.portfolio.loading,
 });
 
-const mapDispatch = dispatch => ({
-  fetchTransactions: () => dispatch(fetchTransactions()),
-});
-
-export default connect(
-  mapState,
-  mapDispatch
-)(Transactions);
+export default connect(mapState)(Transactions);

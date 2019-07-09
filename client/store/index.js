@@ -3,11 +3,24 @@ import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import user from './user';
-import transactions from './transactions';
 import portfolio from './portfolio';
 import stockQuote from './stockQuote';
+import mostActive from './mostActive';
+import games from './games';
+import game from './game';
+import player from './player';
+import news from './news';
 
-const reducer = combineReducers({ user, transactions, portfolio, stockQuote });
+const reducer = combineReducers({
+  user,
+  portfolio,
+  stockQuote,
+  mostActive,
+  games,
+  game,
+  player,
+  news,
+});
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );

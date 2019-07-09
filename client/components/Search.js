@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getQuote } from '../store/stockQuote';
 import StockInfo from './StockInfo';
+import { Link } from 'react-router-dom';
 
 class Search extends Component {
   constructor() {
@@ -15,63 +16,46 @@ class Search extends Component {
   handleChange(event) {
     this.setState({ symbol: event.target.value });
   }
-  handleSubmit(event) {
-    event.preventDefault();
+  handleSubmit() {
     const { symbol } = this.state;
     this.props.getQuote(symbol);
     this.setState({ symbol: '' });
   }
 
   render() {
-    const { stock } = this.props;
     return (
       <div>
-        <div className="row">
-          <div className="col s12 m4 offset-m4">
-            <form onSubmit={this.handleSubmit}>
-              <div className="input-field">
-                <input
-                  type="text"
-                  value={this.state.symbol}
-                  onChange={this.handleChange}
-                  placeholder="Ticker"
-                />
-              </div>
-              <button className="teal accent-3 btn-small" type="submit">
-                Search
-              </button>
-            </form>
+        <h5>Buy Stock</h5>
+        <form>
+          <div className="input-field">
+            <input
+              type="text"
+              value={this.state.symbol}
+              onChange={this.handleChange}
+              placeholder="Ticker"
+            />
           </div>
-        </div>
-        <div className="row">
-          <div className="col s12 m4 offset-m4">
-            {stock.symbol ? (
-              <StockInfo
-                key={stock.symbol}
-                companyName={stock.companyName}
-                symbol={stock.symbol}
-                latestPrice={stock.latestPrice}
-                open={stock.open}
-                change={stock.change}
-                changePercent={stock.changePercent}
-              />
-            ) : null}
-          </div>
-        </div>
+          <Link to={`/quote/${this.state.symbol}`}>
+            <button
+              className="teal accent-3 btn-small"
+              type="submit"
+              onClick={this.handleSubmit}
+            >
+              Search
+            </button>
+          </Link>
+        </form>
+        <div />
       </div>
     );
   }
 }
-
-const mapState = state => ({
-  stock: state.stockQuote,
-});
 
 const mapDispatch = dispatch => ({
   getQuote: ticker => dispatch(getQuote(ticker)),
 });
 
 export default connect(
-  mapState,
+  null,
   mapDispatch
 )(Search);

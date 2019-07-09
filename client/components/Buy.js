@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { buyStock } from '../store/transactions';
+import { tradeStock } from '../store/portfolio';
 
 class Buy extends Component {
   constructor() {
@@ -18,13 +18,13 @@ class Buy extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    const { symbol, price, buyStock, balance } = this.props;
+    const { symbol, price, tradeStock, balance, gameId } = this.props;
     const { shares } = this.state;
     const total = shares * price;
     if (total <= balance && shares % 1 === 0) {
-      buyStock({ type: 'buy', symbol, shares, price });
+      tradeStock({ type: 'buy', symbol, shares, price }, gameId);
       M.toast({
-        html: `Your purchase was submitted: ${symbol} - ${shares} shares`,
+        html: `Your purchase was submitted: ${symbol} ${shares} shares`,
       });
     } else if (shares % 1 !== 0) {
       M.toast({ html: 'Must buy a whole number of shares!' });
@@ -65,12 +65,13 @@ class Buy extends Component {
 }
 
 const mapState = state => ({
-  balance: state.user.balance,
+  gameId: state.game.selected.gameId,
+  balance: state.game.selected.balance,
 });
 
-const mapDispatch = dispatch => ({
-  buyStock: transaction => dispatch(buyStock(transaction)),
-});
+const mapDispatch = {
+  tradeStock,
+};
 
 export default connect(
   mapState,

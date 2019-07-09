@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Sell from './Sell';
 
 class PortfolioListView extends Component {
   render() {
@@ -11,6 +12,9 @@ class PortfolioListView extends Component {
         </div>
         <div className="col m2">${currentValue.toFixed(2)}</div>
         <div className={`col m2 ${color}`}>${price}</div>
+        <div className="col m4">
+          <Sell symbol={symbol} totalShares={shares} price={price} />
+        </div>
       </div>
     );
   }

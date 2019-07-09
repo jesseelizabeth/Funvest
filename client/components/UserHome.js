@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Search from './Search';
-import { getBalance } from '../store/portfolio';
+import { getGames } from '../store/games';
+import Games from './Games';
+import NewGame from './NewGame';
 
 class UserHome extends Component {
   componentDidMount() {
-    this.props.getBalance();
+    this.props.getGames();
   }
   render() {
-    const { firstName, balance } = this.props;
+    const { firstName } = this.props;
     return (
-      <div className="center-align">
+      <div className="container center-align">
         <h5>Welcome back, {firstName}!</h5>
-        <p>Current balance: ${balance}</p>
-        <Search />
+        <div className="row">
+          <div className="col m6 offset-m3 l5 offset-l1">
+            <NewGame />
+          </div>
+          <div className="col m6 offset-m3 l5 offset-l1">
+            <Games />
+          </div>
+        </div>
       </div>
     );
   }
@@ -21,11 +28,10 @@ class UserHome extends Component {
 
 const mapState = state => ({
   firstName: state.user.firstName,
-  balance: state.portfolio.balance,
 });
 
 const mapDispatch = dispatch => ({
-  getBalance: () => dispatch(getBalance()),
+  getGames: () => dispatch(getGames()),
 });
 
 export default connect(
