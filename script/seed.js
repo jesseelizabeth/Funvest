@@ -1,4 +1,4 @@
-const db = require('./server/db');
+const db = require('../server/db');
 const { green, red } = require('chalk');
 
 const {
@@ -7,7 +7,7 @@ const {
   Player,
   Transaction,
   Stock,
-} = require('./server/db/models');
+} = require('../server/db/models');
 const seed = async () => {
   await db.sync({ force: true });
 
