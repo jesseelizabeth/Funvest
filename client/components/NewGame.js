@@ -26,8 +26,9 @@ class NewGame extends Component {
   render() {
     return (
       <div>
-        <h4>New Game</h4>
-        <div className="card-panel">
+        <h6 className="bold">New Game</h6>
+        <br />
+        <div>
           <form>
             <input
               value={this.state.name}
@@ -43,15 +44,16 @@ class NewGame extends Component {
               type="text"
               placeholder="Starting balance"
             />
-            <button
-              className="prefix teal accent-3 btn-small"
-              type="button"
-              onClick={this.handleClick}
-            >
-              Create
-            </button>
           </form>
         </div>
+        <br />
+        <button
+          className="prefix teal accent-3 btn-small"
+          type="button"
+          onClick={this.handleClick}
+        >
+          Create
+        </button>
       </div>
     );
   }

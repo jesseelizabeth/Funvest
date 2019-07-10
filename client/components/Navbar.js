@@ -16,30 +16,37 @@ class Navbar extends Component {
     const { isLoggedIn } = this.props;
     return (
       <div>
-        <nav>
-          {isLoggedIn ? (
-            <div className="nav-wrapper teal accent-4">
-              <Link to="/home" className="brand-logo">
-                Funvest
-              </Link>
-              {/* 
-              <div className="row">
-                <div className="col l6 offset-l3">
-                  <Search />
-                </div>
-              </div> */}
-
-              <ul id="nav-mobile" className="right hide-on-med-and-down">
-                <li>
-                  <a href="#" onClick={this.handleClick}>
-                    Logout
-                  </a>
-                </li>
-              </ul>
-            </div>
-          ) : (
-            <div className="nav-wrapper teal accent-4">
-              <ul id="nav-mobile" className="right hide-on-med-and-down">
+        <nav className="nav-wrapper teal accent-4">
+          <div className="container">
+            <Link to="/home" className="brand-logo">
+              Funvest
+            </Link>
+            {isLoggedIn ? (
+              <div>
+                {/* <a
+                  href=""
+                  className="sidenav-trigger"
+                  data-target="mobile-menu"
+                >
+                  <i className="material-icons">menu</i>
+                </a> */}
+                <ul className="right hide-on-med-and-down">
+                  <li>
+                    <a href="#" onClick={this.handleClick}>
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+                {/* <ul className="sidenav grey lighten-2" id="mobile-menu">
+                  <li>
+                    <a href="#" onClick={this.handleClick}>
+                      Logout
+                    </a>
+                  </li>
+                </ul> */}
+              </div>
+            ) : (
+              <ul className="right hide-on-med-and-down">
                 <li>
                   <Link to="/login">Login</Link>
                 </li>
@@ -47,8 +54,8 @@ class Navbar extends Component {
                   <Link to="/signup">Sign Up</Link>
                 </li>
               </ul>
-            </div>
-          )}
+            )}
+          </div>
         </nav>
       </div>
     );

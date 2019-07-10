@@ -23,11 +23,11 @@ class Search extends Component {
   }
 
   render() {
+    const { gameInfo } = this.props;
     return (
       <div>
-        <h5>Buy Stock</h5>
-        <form>
-          <div className="input-field">
+        <div className="row">
+          <div className="col l4">
             <input
               type="text"
               value={this.state.symbol}
@@ -35,16 +35,16 @@ class Search extends Component {
               placeholder="Ticker"
             />
           </div>
-          <Link to={`/quote/${this.state.symbol}`}>
-            <button
-              className="teal accent-3 btn-small"
-              type="submit"
-              onClick={this.handleSubmit}
-            >
-              Search
-            </button>
-          </Link>
-        </form>
+        </div>
+        <Link to={`/quote/${this.state.symbol}`}>
+          <button
+            className="teal accent-3 btn-small"
+            type="submit"
+            onClick={this.handleSubmit}
+          >
+            Search
+          </button>
+        </Link>
         <div />
       </div>
     );

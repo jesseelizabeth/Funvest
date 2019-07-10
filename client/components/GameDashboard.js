@@ -14,7 +14,7 @@ class GameDashboard extends Component {
     super();
     this.state = {
       active: 'portfolio',
-      portfolioColor: 'blue-text',
+      portfolioColor: 'teal-text text-accent-3 bold',
       transactionsColor: 'black-text',
     };
     this.handleClick = this.handleClick.bind(this);
@@ -30,55 +30,71 @@ class GameDashboard extends Component {
     if (active === 'portfolio') {
       this.setState({
         active,
-        portfolioColor: 'blue-text',
+        portfolioColor: 'teal-text text-accent-3 bold',
         transactionsColor: 'black-text',
       });
     } else {
       this.setState({
         active,
         portfolioColor: 'black-text',
-        transactionsColor: 'blue-text',
+        transactionsColor: 'teal-text text-accent-3 bold',
       });
     }
   }
   render() {
-    const { loading, players, game } = this.props;
+    const {
+      loadingGame,
+      players,
+      transactions,
+      loadingPortfolio,
+      game,
+      user,
+    } = this.props;
     const { active, portfolioColor, transactionsColor } = this.state;
-    if (loading) return <LoadingScreen />;
+    const { gameName } = this.props.location.state;
+    if (loadingGame || loadingPortfolio) return <LoadingScreen />;
     return (
-      <div>
+      <div className="container">
         <div className="row">
-          <h4 className="center-align">{game.name}</h4>
+          <h5 className="center-align bold">{gameName}</h5>
         </div>
+        <div className="divider" />
+        <br />
         <div className="row">
-          <div className="col l6 offset-l1">
-            <Search />
+          <div className="col l8">
+            <Search game={game} />
           </div>
-          <div className="col l3 offset-l1">
+          <div className="col l4 z-depth-2">
+            <Leaderboard players={players} user={user} />
+          </div>
+          {/* <div className="col l3">
             <AddPlayers />
-          </div>
+          </div> */}
         </div>
         <div className="row">
           <h5
-            className={`${portfolioColor} col l1 offset-l1`}
+            className={`${portfolioColor} col l2`}
             onClick={() => this.handleClick('portfolio')}
           >
             Portfolio
           </h5>
           <h5
-            className={`${transactionsColor} col l4`}
+            className={`${transactionsColor} col l7`}
             onClick={() => this.handleClick('transactions')}
           >
             Transactions
           </h5>
-          <h5 className="col l3 offset-l2">Leaderboard</h5>
         </div>
         <div className="row">
-          <div className="col l6 offset-l1">
-            {active === 'portfolio' ? <Portfolio /> : <Transactions />}
-          </div>
-          <div className="col l3 offset-l1 z-depth-2">
-            <Leaderboard players={players} />
+          <div className="col s12">
+            {active === 'portfolio' ? (
+              <Portfolio />
+            ) : (
+              <Transactions
+                transactions={transactions}
+                loading={loadingPortfolio}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -89,7 +105,10 @@ class GameDashboard extends Component {
 const mapState = state => ({
   game: state.game.selected,
   players: state.game.players,
-  loading: state.game.loading,
+  loadingGame: state.game.loading,
+  transactions: state.portfolio.transactions,
+  loadingPortfolio: state.portfolio.loading,
+  user: state.user,
 });
 
 const mapDispatch = {

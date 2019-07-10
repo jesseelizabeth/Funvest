@@ -33,14 +33,14 @@ class Sell extends Component {
   render() {
     return (
       <div className="row">
-        <div className="col l2">
+        <div className="col l6">
           <input
             type="text"
             onChange={this.handleChange}
             placeholder="Shares"
           />
         </div>
-        <div className="col l2">
+        <div className="col l6">
           <button
             disabled={!this.state.shares}
             className="prefix teal accent-3 btn-small"

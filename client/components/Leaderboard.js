@@ -2,20 +2,27 @@ import React, { Component } from 'react';
 
 class Leaderboard extends Component {
   render() {
-    const { players } = this.props;
+    const { players, user } = this.props;
     return (
       <table className="highlight">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Balance</th>
+            <th>Leaderboard</th>
+            <th />
           </tr>
         </thead>
         <tbody>
           {players.map(player => (
-            <tr key={player.id}>
+            <tr
+              key={player.id}
+              className={
+                player.user.id === user.id
+                  ? 'bold teal-text text-accent-3'
+                  : null
+              }
+            >
               <td>{player.user.firstName}</td>
-              <td>${player.balance}</td>
+              <td className="right-align">${player.balance}</td>
             </tr>
           ))}
         </tbody>

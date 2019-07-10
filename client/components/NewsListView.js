@@ -14,7 +14,7 @@ const News = props => {
           <div>{source}</div>
           <div className="bold">{headline}</div>
         </div>
-        <div className="col l4">
+        <div className="col l4 right-align">
           <img id="img" src={image} />
         </div>
       </div>

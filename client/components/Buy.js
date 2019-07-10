@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { tradeStock } from '../store/portfolio';
 
+import M from 'materialize-css';
+
 class Buy extends Component {
   constructor() {
     super();
@@ -34,31 +36,56 @@ class Buy extends Component {
     this.setState({ shares: '' });
   }
   render() {
-    const { symbol } = this.props;
+    const { symbol, price, balance } = this.props;
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <div className="row">
-            <div className="input-field">
-              <input
-                type="text"
-                value={this.state.shares}
-                onChange={this.handleChange}
-                placeholder="Shares"
-                className="col s4 offset-s4"
-              />
-            </div>
+      <div className="card-panel">
+        <div className="bold">Buy {symbol}</div>
+        <div className="divider" />
+
+        <div className="row">
+          <div className="col s6">
+            <br />
+            <div>Shares</div>
           </div>
-          <div className="row">
-            <button
-              disabled={!this.state.shares}
-              className="teal accent-3 btn-small"
-              type="submit"
-            >
-              Buy {symbol}
-            </button>
+          <div className="col s3 offset-s3 right-align">
+            <input
+              type="text"
+              value={this.state.shares}
+              onChange={this.handleChange}
+            />
           </div>
-        </form>
+        </div>
+        <div className="row">
+          <div className="col s6">
+            <div>Current Price</div>
+          </div>
+          <div className="col s6 right-align">
+            <div>${price}</div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col s6">
+            <div className="bold">Estimated Cost</div>
+          </div>
+          <div className="col s6 right-align">
+            <div>${(price * this.state.shares).toFixed(2)}</div>
+          </div>
+        </div>
+        <div className="row">
+          <button
+            disabled={!this.state.shares}
+            className="btn teal accent-3 col s12"
+            type="submit"
+            onClick={this.handleSubmit}
+          >
+            Buy {symbol}
+          </button>
+        </div>
+        <div className="divider" />
+        <br />
+        <div className="row">
+          <div className="center-align">${balance} available</div>
+        </div>
       </div>
     );
   }

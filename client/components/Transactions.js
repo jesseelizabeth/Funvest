@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import TransactionListView from './TransactionListView';
-import LoadingScreen from './LoadingScreen';
 
 class Transactions extends Component {
   render() {
-    const { transactions, loading } = this.props;
-    if (loading) return <LoadingScreen />;
+    const { transactions } = this.props;
     return (
       <div>
         <div className="collection">
@@ -34,9 +31,4 @@ class Transactions extends Component {
   }
 }
 
-const mapState = state => ({
-  transactions: state.portfolio.transactions,
-  loading: state.portfolio.loading,
-});
-
-export default connect(mapState)(Transactions);
+export default Transactions;
