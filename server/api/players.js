@@ -55,6 +55,21 @@ router.get('/:gameId/:playerId/transactions', async (req, res, next) => {
   }
 });
 
+// get balance for a single player
+// router.get('/:gameId/:playerId/balance', async (req, res, next) => {
+//   try {
+//     console.log('HEYYYYY');
+//     const portfolio = await Player.findOne({
+//       where: { gameId: req.params.gameId, playerId: req.params.playerId },
+//       include: [{ model: Transaction }, { model: Stock }],
+//     });
+//     console.log('PORTFOLIO', portfolio);
+//     res.json(portfolio);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
 // add player to a game
 router.post('/:gameId/:userEmail', async (req, res, next) => {
   try {

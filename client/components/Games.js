@@ -7,7 +7,7 @@ class Games extends Component {
     const { games } = this.props;
     return (
       <div>
-        <h6 className="bold">Game Center</h6>
+        <h6 className="bold center-align">Game Center</h6>
         {games.map(game => (
           <GameList key={game.id} game={game} />
         ))}

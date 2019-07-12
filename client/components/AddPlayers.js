@@ -32,9 +32,9 @@ class AddPlayers extends Component {
 
     return (
       <div>
-        <h5>Add Players</h5>
+        <h6 className="bold">Add Players</h6>
         <div className="row">
-          <div className="input-field">
+          <div className="col l6 center-align">
             <input
               type="text"
               value={this.state.email}
@@ -42,19 +42,20 @@ class AddPlayers extends Component {
               placeholder="Email"
             />
           </div>
-          <button
-            className="teal accent-3 btn-small"
-            type="button"
-            onClick={this.handleSubmit}
-          >
-            Search
-          </button>
-          {player ? (
-            <div>
-              <Player player={player} game={game} />
-            </div>
-          ) : null}
         </div>
+        <button
+          className="teal accent-3 btn-flat"
+          type="button"
+          onClick={this.handleSubmit}
+        >
+          Search
+        </button>
+
+        {player ? (
+          <div>
+            <Player player={player} game={game} />
+          </div>
+        ) : null}
       </div>
     );
   }

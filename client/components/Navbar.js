@@ -23,27 +23,16 @@ class Navbar extends Component {
             </Link>
             {isLoggedIn ? (
               <div>
-                {/* <a
-                  href=""
-                  className="sidenav-trigger"
-                  data-target="mobile-menu"
-                >
-                  <i className="material-icons">menu</i>
-                </a> */}
                 <ul className="right hide-on-med-and-down">
+                  <li>
+                    <Link to="/home">Game Center</Link>
+                  </li>
                   <li>
                     <a href="#" onClick={this.handleClick}>
                       Logout
                     </a>
                   </li>
                 </ul>
-                {/* <ul className="sidenav grey lighten-2" id="mobile-menu">
-                  <li>
-                    <a href="#" onClick={this.handleClick}>
-                      Logout
-                    </a>
-                  </li>
-                </ul> */}
               </div>
             ) : (
               <ul className="right hide-on-med-and-down">

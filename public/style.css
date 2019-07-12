@@ -8,5 +8,9 @@
 }
 
 a:hover * {
-  background: aliceblue;
+  color: turquoise;
+}
+
+.rounded {
+  border-radius: 20px;
 }

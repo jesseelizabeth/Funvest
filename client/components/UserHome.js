@@ -13,12 +13,17 @@ class UserHome extends Component {
     return (
       <div className="container">
         <h5 className="center-align">Welcome back, {firstName}!</h5>
+        <br />
         <div className="row">
-          <div className="col l8 m12">
+          <div className="card-panel">
             <Games />
           </div>
-          <div className="col l3 offset-l1 m12">
-            <NewGame />
+        </div>
+        <div className="row">
+          <div className="col l6">
+            <div className="card-panel">
+              <NewGame />
+            </div>
           </div>
         </div>
       </div>

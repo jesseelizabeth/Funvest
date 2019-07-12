@@ -5,23 +5,49 @@ import News from './News';
 import CompanyInfo from './CompanyInfo';
 import { getQuote, getLogo, getCompanyInfo } from '../store/stockQuote';
 import { fetchNews } from '../store/news';
+import { getGame } from '../store/game';
+import { getColor } from '../../utils';
 import LoadingScreen from './LoadingScreen';
 
 class StockDashbaord extends Component {
-  componentDidMount() {
+  constructor() {
+    super();
+    this.state = {
+      color: 'grey-text',
+    };
+  }
+  async componentDidMount() {
     const { symbol } = this.props.match.params;
-    this.props.getQuote(symbol);
+    const { gameId } = this.props.location.state;
+    await this.props.getQuote(symbol);
     this.props.getCompanyInfo(symbol);
     this.props.fetchNews(symbol);
+    this.props.getGame(gameId);
+    // get color for stock price
+    const { close, latestPrice } = this.props.stock;
+    const color = getColor(close, latestPrice);
+    this.setState({ color });
   }
   render() {
     const { symbol } = this.props.match.params;
-    const { stock, loading, companyInfo, news } = this.props;
-    if (loading) return <LoadingScreen />;
+    const {
+      stock,
+      loading,
+      companyInfo,
+      news,
+      loadingNews,
+      balance,
+    } = this.props;
+    if (loading || loadingNews) return <LoadingScreen />;
     return (
       <div className="container">
         <div className="row">
-          <StockInfo stock={stock} />
+          <StockInfo
+            stock={stock}
+            color={this.state.color}
+            loading={loading}
+            balance={balance}
+          />
         </div>
         <div className="row">
           <div className="col">
@@ -45,6 +71,7 @@ const mapState = state => ({
   companyInfo: state.stockQuote.company,
   news: state.news.all,
   loadingNews: state.news.loading,
+  balance: state.game.selected.balance,
 });
 
 const mapDispatch = {
@@ -52,6 +79,7 @@ const mapDispatch = {
   getLogo,
   getCompanyInfo,
   fetchNews,
+  getGame,
 };
 
 export default connect(

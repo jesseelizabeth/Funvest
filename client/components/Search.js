@@ -23,11 +23,11 @@ class Search extends Component {
   }
 
   render() {
-    const { gameInfo } = this.props;
+    const { gameId } = this.props.game;
     return (
       <div>
         <div className="row">
-          <div className="col l4">
+          <div className="col l6 center-align">
             <input
               type="text"
               value={this.state.symbol}
@@ -36,15 +36,19 @@ class Search extends Component {
             />
           </div>
         </div>
-        <Link to={`/quote/${this.state.symbol}`}>
-          <button
-            className="teal accent-3 btn-small"
-            type="submit"
-            onClick={this.handleSubmit}
+        <div>
+          <Link
+            to={{ pathname: `/quote/${this.state.symbol}`, state: { gameId } }}
           >
-            Search
-          </button>
-        </Link>
+            <button
+              className="teal accent-3 btn-flat"
+              type="submit"
+              onClick={this.handleSubmit}
+            >
+              Search
+            </button>
+          </Link>
+        </div>
         <div />
       </div>
     );

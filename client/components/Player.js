@@ -17,19 +17,19 @@ class Player extends Component {
     const { player } = this.props;
     return (
       <div>
-        <div className="collection">
-          <div className="collection-item">
-            <div className="col">{player.firstName}</div>
-            <div className="col">{player.lastName}</div>
-
-            <button
-              className="teal accent-3 btn-small"
-              type="button"
-              onClick={() => this.add(player.email)}
-            >
-              Add to Game
-            </button>
+        <br />
+        <div className="divider" />
+        <br />
+        <div className="row">
+          <div className="col bold">
+            {player.firstName} {player.lastName}
           </div>
+          <i
+            className="material-icons teal-text text-accent-3 col right-align"
+            onClick={() => this.add(player.email)}
+          >
+            person_add
+          </i>
         </div>
       </div>
     );

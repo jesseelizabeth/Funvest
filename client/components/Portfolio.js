@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import LoadingScreen from './LoadingScreen';
 import LoadQuote from './LoadQuote';
 
 class Portfolio extends Component {
   render() {
-    const { portfolio, loading } = this.props;
-    if (loading) return <LoadingScreen />;
+    const { portfolio, transactions } = this.props;
     return (
       <div>
         <div className="collection">
@@ -14,8 +11,8 @@ class Portfolio extends Component {
             <div className="row">
               <div className="col m2 bold">Ticker</div>
               <div className="col m2 bold">Shares</div>
-              <div className="col m2 bold">Value</div>
-              <div className="col m2 bold">Price</div>
+              <div className="col m2 bold">Market Value</div>
+              <div className="col m2 bold">Current Price</div>
             </div>
           </div>
           {portfolio.map(stock => (
@@ -29,10 +26,4 @@ class Portfolio extends Component {
   }
 }
 
-const mapState = state => ({
-  balance: state.portfolio.balance,
-  portfolio: state.portfolio.stocks,
-  loading: state.portfolio.loading,
-});
-
-export default connect(mapState)(Portfolio);
+export default Portfolio;

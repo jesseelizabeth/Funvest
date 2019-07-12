@@ -1,20 +1,7 @@
 import React, { Component } from 'react';
 import Buy from './Buy';
-import { getColor } from '../../utils';
-import LoadingScreen from './LoadingScreen';
 
 class StockInfo extends Component {
-  constructor() {
-    super();
-    this.state = {
-      color: 'grey-text',
-    };
-  }
-  componentDidMount() {
-    const { open, latestPrice } = this.props.stock;
-    const color = getColor(open, latestPrice);
-    this.setState({ color });
-  }
   render() {
     const {
       companyName,
@@ -22,22 +9,24 @@ class StockInfo extends Component {
       latestPrice,
       change,
       changePercent,
-      loading,
     } = this.props.stock;
-    if (loading) return <LoadingScreen />;
+    const { color, balance } = this.props;
     return (
       <div>
         <br />
         <div className="col m7">
           <h5 className="bold">{companyName}</h5>
-          <h5 className={this.state.color}>${latestPrice}</h5>
+          <h5 className={color}>
+            ${latestPrice ? latestPrice.toFixed(2) : latestPrice}
+          </h5>
           <div>
-            ${change} ({changePercent}%) Today
+            ${change ? change.toFixed(2) : change} (
+            {changePercent ? changePercent.toFixed(2) : changePercent}%) Today
           </div>
         </div>
 
         <div className="col m5">
-          <Buy symbol={symbol} price={latestPrice} />
+          <Buy symbol={symbol} price={latestPrice} balance={balance} />
         </div>
       </div>
     );

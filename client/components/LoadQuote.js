@@ -1,42 +1,31 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import token from '../../secrets';
 import PortfolioListView from './PortfolioListView';
-import { getColor } from '../../utils';
+import { getColor, fetchPrices } from '../../utils';
 
 class LoadQuote extends Component {
   constructor() {
     super();
     this.state = {
-      price: null,
-      open: null,
       color: 'grey-text',
     };
   }
   async componentDidMount() {
     const { stock } = this.props;
-    const { data } = await axios.get(
-      `https://cloud.iexapis.com/v1/stock/${
-        stock.symbol
-      }/quote?displayPercent=true&token=${token.token}`
-    );
-    this.setState({ price: data.latestPrice, open: data.open });
-
-    const { open, price } = this.state;
-    const color = getColor(open, price);
+    await fetchPrices(stock);
+    const color = getColor(stock.closePrice, stock.latestPrice);
     this.setState({ color });
   }
   render() {
-    const { symbol, shares } = this.props.stock;
-    const { color, price } = this.state;
-    const currentValue = price * shares;
+    const { symbol, shares, latestPrice } = this.props.stock;
+    const { color } = this.state;
+    const currentValue = latestPrice * shares;
     return (
       <PortfolioListView
         symbol={symbol}
         shares={shares}
         currentValue={currentValue}
         color={color}
-        price={price}
+        price={latestPrice}
       />
     );
   }

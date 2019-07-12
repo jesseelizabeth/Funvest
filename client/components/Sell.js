@@ -1,6 +1,9 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { tradeStock } from '../store/portfolio';
+
+import M from 'materialize-css';
 
 class Sell extends Component {
   constructor() {
@@ -15,12 +18,11 @@ class Sell extends Component {
     this.setState({ shares: event.target.value });
   }
   handleClick() {
-    const { symbol, price, totalShares, gameId } = this.props;
+    const { symbol, price, totalShares, gameId, tradeStock } = this.props;
     const shares = Number(this.state.shares);
     const transaction = { type: 'sell', symbol, shares, price };
     if (shares <= totalShares) {
-      this.props.tradeStock(transaction, gameId);
-      this.setState({ shares: '' });
+      tradeStock(transaction, gameId);
       M.toast({
         html: `Your trade was successful: ${symbol} ${shares} shares`,
       });
@@ -29,6 +31,7 @@ class Sell extends Component {
     } else {
       M.toast({ html: 'Insufficient shares for sale' });
     }
+    this.setState({ shares: '' });
   }
   render() {
     return (

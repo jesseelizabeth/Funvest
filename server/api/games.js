@@ -118,18 +118,7 @@ router.post('/:gameId/transactions', async (req, res, next) => {
         playerId: player.id,
       });
     }
-    // update user balance for that game
-    if (transaction.type === 'buy') {
-      await player.update({
-        balance:
-          Number(player.balance) - transaction.shares * transaction.price,
-      });
-    } else {
-      await player.update({
-        balance:
-          Number(player.balance) + transaction.shares * transaction.price,
-      });
-    }
+
     res.json(transaction);
   } catch (error) {
     next(error);
