@@ -16,9 +16,11 @@ class LoadQuote extends Component {
     this.setState({ color });
   }
   render() {
+    const { cost } = this.props;
     const { symbol, shares, latestPrice } = this.props.stock;
     const { color } = this.state;
     const currentValue = latestPrice * shares;
+    const difference = (currentValue - cost).toFixed(2);
     return (
       <PortfolioListView
         symbol={symbol}
@@ -26,6 +28,7 @@ class LoadQuote extends Component {
         currentValue={currentValue}
         color={color}
         price={latestPrice}
+        difference={difference}
       />
     );
   }

@@ -96,7 +96,7 @@ class GameDashboard extends Component {
           <div className="row">
             <div className="col s12">
               {active === 'portfolio' ? (
-                <Portfolio portfolio={portfolio} transaction={transactions} />
+                <Portfolio portfolio={portfolio} transactions={transactions} />
               ) : (
                 <Transactions
                   transactions={transactions}

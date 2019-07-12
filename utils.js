@@ -20,3 +20,21 @@ export const fetchPrices = async stock => {
   stock.latestPrice = data.latestPrice;
   stock.closePrice = data.close;
 };
+
+export const totalCost = transactions => {
+  let costs = [];
+  transactions.map(transaction => {
+    if (costs[transaction.symbol] && transaction.type === 'buy') {
+      costs[transaction.symbol] +=
+        Number(transaction.price) * Number(transaction.shares).toFixed(2);
+    } else if (costs[transaction.symbol] && transaction.type === 'sell') {
+      costs[transaction.symbol] -= (
+        Number(transaction.price) * Number(transaction.shares)
+      ).toFixed(2);
+    } else {
+      costs[transaction.symbol] =
+        Number(transaction.price) * Number(transaction.shares).toFixed(2);
+    }
+  });
+  return costs;
+};
