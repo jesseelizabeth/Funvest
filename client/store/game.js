@@ -1,10 +1,12 @@
 import axios from 'axios';
+import { totalCost, fetchPrices } from '../../utils';
 
 // action types
 const LOADING_GAME = 'LOADING_GAME';
 const GET_GAME = 'GET_GAME';
 const GET_PLAYERS = 'GET_PLAYERS';
 const ADD_PLAYER = 'ADD_PLAYER';
+const GET_BALANCE = 'GET_BALANCE';
 
 // action creators
 const loading = () => ({
@@ -26,6 +28,11 @@ const addedPlayer = player => ({
   player,
 });
 
+const gotBalance = player => ({
+  type: GET_BALANCE,
+  player,
+});
+
 // thunk
 export const getGame = gameId => async dispatch => {
   dispatch(loading());
@@ -42,6 +49,12 @@ export const getPlayers = gameId => async dispatch => {
 export const addPlayer = (gameId, userEmail) => async dispatch => {
   const { data } = await axios.post(`/api/players/${gameId}/${userEmail}`);
   dispatch(addedPlayer(data));
+};
+
+export const getBalance = playerId => async dispatch => {
+  dispatch(loading());
+  const { data } = await axios.get(`/api/players/${playerId}/balance`);
+  dispatch(gotBalance(data));
 };
 
 const initialState = {
@@ -65,6 +78,13 @@ export default function(state = initialState, action) {
       } else {
         return { ...state, players: [...state.players, action.player] };
       }
+    }
+    case GET_BALANCE: {
+      // const { transactions, stocks } = action.player;
+      // const costs = totalCost(transactions);
+      // stocks.map(stock => fetchPrices(stock));
+      console.log('SUPPPPPP', action.player);
+      return state;
     }
     default:
       return state;

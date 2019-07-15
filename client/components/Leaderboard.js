@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LeaderboardList from './LeaderboardList';
 
 class Leaderboard extends Component {
   render() {
@@ -13,17 +14,7 @@ class Leaderboard extends Component {
         </thead>
         <tbody>
           {players.map(player => (
-            <tr
-              key={player.id}
-              className={
-                player.user.id === user.id
-                  ? 'bold teal-text text-accent-3'
-                  : null
-              }
-            >
-              <td>{player.user.firstName}</td>
-              <td className="right-align">${player.balance}</td>
-            </tr>
+            <LeaderboardList key={player.id} player={player} user={user} />
           ))}
         </tbody>
       </table>

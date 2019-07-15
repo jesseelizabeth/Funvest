@@ -23,9 +23,10 @@ class PortfolioListView extends Component {
         <div className="col m2">
           {shares} {shares === 1 ? 'share' : 'shares'}
         </div>
-        <div className="col m2">${currentValue.toFixed(2)}</div>
+        <div className="col m2">${currentValue}</div>
+        <div className={`col m2 ${color}`}>${price}</div>
         <div className={`col m2 ${differenceColor}`}>${difference}</div>
-        <div className="col m4">
+        <div className="col m2">
           <Sell symbol={symbol} totalShares={shares} price={price} />
         </div>
       </div>

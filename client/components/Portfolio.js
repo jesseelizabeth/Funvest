@@ -15,6 +15,7 @@ class Portfolio extends Component {
               <div className="col m2 bold">Ticker</div>
               <div className="col m2 bold">Shares</div>
               <div className="col m2 bold">Market Value</div>
+              <div className="col m2 bold">Current Price</div>
               <div className="col m2 bold">Gain/Loss</div>
             </div>
           </div>

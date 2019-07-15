@@ -19,7 +19,7 @@ class LoadQuote extends Component {
     const { cost } = this.props;
     const { symbol, shares, latestPrice } = this.props.stock;
     const { color } = this.state;
-    const currentValue = latestPrice * shares;
+    const currentValue = (latestPrice * shares).toFixed(2);
     const difference = (currentValue - cost).toFixed(2);
     return (
       <PortfolioListView

@@ -19,12 +19,12 @@ class GameDashboard extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
   }
-  componentDidMount() {
+  async componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.getPlayers(id);
-    this.props.getGame(id);
-    this.props.fetchPortfolio(id);
-    this.props.fetchTransactions(id);
+    await this.props.getPlayers(id);
+    await this.props.getGame(id);
+    await this.props.fetchPortfolio(id);
+    await this.props.fetchTransactions(id);
   }
   handleClick(active) {
     if (active === 'portfolio') {
@@ -52,7 +52,7 @@ class GameDashboard extends Component {
       user,
     } = this.props;
     const { active, portfolioColor, transactionsColor } = this.state;
-    const { name } = this.props.location.state || game.game;
+    const { name } = this.props.location.state;
     if (loadingGame || loadingPortfolio) return <LoadingScreen />;
     return (
       <div>

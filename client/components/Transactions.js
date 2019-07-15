@@ -13,6 +13,7 @@ class Transactions extends Component {
               <div className="col m2 bold">Ticker</div>
               <div className="col m2 bold">Shares</div>
               <div className="col m2 bold">Price</div>
+              <div className="col m2 bold">Cost</div>
             </div>
           </div>
           {transactions.map(transaction => (

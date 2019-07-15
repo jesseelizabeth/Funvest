@@ -17,11 +17,17 @@ router.get('/:gameId', async (req, res, next) => {
 });
 
 // get a single player for a game
-router.get('/:gameId/:playerId', async (req, res, next) => {
+router.get('/:playerId/balance', async (req, res, next) => {
   try {
     const player = await Player.findOne({
-      where: { gameId: req.params.gameId, playerId: req.params.playerId },
+      where: { id: req.params.playerId },
       include: { model: User },
+    });
+    player.stocks = await Stock.findAll({
+      where: { playerId: player.id },
+    });
+    player.transactions = await Transaction.findAll({
+      where: { playerId: player.id },
     });
     res.json(player);
   } catch (error) {

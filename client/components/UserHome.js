@@ -12,16 +12,16 @@ class UserHome extends Component {
     const { firstName } = this.props;
     return (
       <div className="container">
-        <h5 className="center-align">Welcome back, {firstName}!</h5>
+        <h6 className="bold center-align">Welcome back, {firstName}!</h6>
         <br />
         <div className="row">
-          <div className="card-panel">
+          <div className="card-panel rounded">
             <Games />
           </div>
         </div>
         <div className="row">
           <div className="col l6">
-            <div className="card-panel">
+            <div className="card-panel rounded">
               <NewGame />
             </div>
           </div>

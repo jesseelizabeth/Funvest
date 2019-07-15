@@ -2,6 +2,7 @@ import React from 'react';
 
 const TransactionListView = props => {
   const { type, symbol, shares, price } = props;
+  const cost = (price * shares).toFixed(2);
   return (
     <div className="row">
       <div className="col m2">{type.toUpperCase()}</div>
@@ -10,6 +11,7 @@ const TransactionListView = props => {
         {shares} {shares === 1 ? 'share' : 'shares'}
       </div>
       <div className="col m2">${price}</div>
+      <div className="col m2">${cost}</div>
     </div>
   );
 };

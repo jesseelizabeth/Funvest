@@ -17,8 +17,8 @@ export const fetchPrices = async stock => {
       stock.symbol
     }/quote?displayPercent=true&token=${token.token}`
   );
-  stock.latestPrice = data.latestPrice;
-  stock.closePrice = data.close;
+  stock.latestPrice = data.latestPrice.toFixed(2);
+  stock.closePrice = data.close.toFixed(2);
 };
 
 export const totalCost = transactions => {
