@@ -23,3 +23,4 @@ module.exports = token
 * ```IEX Cloud API```
 
 ## View deployed app at ```https://playfunvest.herokuapp.com```
+[playfunvest.herokuapp.com](https://playfunvest.herokuapp.com)
