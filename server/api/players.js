@@ -16,65 +16,27 @@ router.get('/:gameId', async (req, res, next) => {
   }
 });
 
-// get a single player for a game
-router.get('/:playerId/balance', async (req, res, next) => {
+// get portfolio for a single player
+router.get('/:playerId/portfolio', async (req, res, next) => {
   try {
+    const portfolio = {};
     const player = await Player.findOne({
       where: { id: req.params.playerId },
-      include: { model: User },
     });
-    player.stocks = await Stock.findAll({
+    const stocks = await Stock.findAll({
       where: { playerId: player.id },
     });
-    player.transactions = await Transaction.findAll({
+    const transactions = await Transaction.findAll({
       where: { playerId: player.id },
     });
-    res.json(player);
+    portfolio.player = player;
+    portfolio.stocks = stocks;
+    portfolio.transactions = transactions;
+    res.json(portfolio);
   } catch (error) {
     next(error);
   }
 });
-
-// get portfolio for a single player
-router.get('/:gameId/:playerId/portfolio', async (req, res, next) => {
-  try {
-    const playerPortfolio = await Player.findOne({
-      where: { gameId: req.params.gameId, playerId: req.params.playerId },
-      include: { model: Stock },
-    });
-    res.json(playerPortfolio);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// get transactions for a single player
-router.get('/:gameId/:playerId/transactions', async (req, res, next) => {
-  try {
-    const playerTransactions = await Player.findOne({
-      where: { gameId: req.params.gameId, playerId: req.params.playerId },
-      include: { model: Transaction },
-    });
-    res.json(playerTransactions);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// get balance for a single player
-// router.get('/:gameId/:playerId/balance', async (req, res, next) => {
-//   try {
-//     console.log('HEYYYYY');
-//     const portfolio = await Player.findOne({
-//       where: { gameId: req.params.gameId, playerId: req.params.playerId },
-//       include: [{ model: Transaction }, { model: Stock }],
-//     });
-//     console.log('PORTFOLIO', portfolio);
-//     res.json(portfolio);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 // add player to a game
 router.post('/:gameId/:userEmail', async (req, res, next) => {

@@ -12,6 +12,18 @@ const Stock = db.define('stock', {
       min: 0,
     },
   },
+  latestPrice: {
+    type: Sequelize.DECIMAL(10, 2),
+    defaultValue: null,
+  },
+  closePrice: {
+    type: Sequelize.DECIMAL(10, 2),
+    defaultValue: null,
+  },
+  value: {
+    type: Sequelize.DECIMAL(10, 2),
+    defaultValue: null,
+  },
 });
 
 module.exports = Stock;

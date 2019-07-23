@@ -6,6 +6,7 @@ import CompanyInfo from './CompanyInfo';
 import { getQuote, getLogo, getCompanyInfo } from '../store/stockQuote';
 import { fetchNews } from '../store/news';
 import { getGame } from '../store/game';
+import { fetchPortfolio } from '../store/portfolio';
 import { getColor } from '../../utils';
 import LoadingScreen from './LoadingScreen';
 
@@ -18,11 +19,12 @@ class StockDashbaord extends Component {
   }
   async componentDidMount() {
     const { symbol } = this.props.match.params;
-    const { gameId } = this.props.location.state;
+    const { id } = this.props.location.state;
     await this.props.getQuote(symbol);
     this.props.getCompanyInfo(symbol);
     this.props.fetchNews(symbol);
-    this.props.getGame(gameId);
+    this.props.getGame(id);
+    this.props.fetchPortfolio(id);
     // get color for stock price
     const { close, latestPrice } = this.props.stock;
     const color = getColor(close, latestPrice);
@@ -37,6 +39,7 @@ class StockDashbaord extends Component {
       news,
       loadingNews,
       balance,
+      game,
     } = this.props;
     if (loading || loadingNews) return <LoadingScreen />;
     return (
@@ -47,6 +50,7 @@ class StockDashbaord extends Component {
             color={this.state.color}
             loading={loading}
             balance={balance}
+            game={game}
           />
         </div>
         <div className="row">
@@ -71,7 +75,8 @@ const mapState = state => ({
   companyInfo: state.stockQuote.company,
   news: state.news.all,
   loadingNews: state.news.loading,
-  balance: state.game.selected.balance,
+  balance: state.portfolio.portfolio.balance,
+  game: state.game.selected,
 });
 
 const mapDispatch = {
@@ -80,6 +85,7 @@ const mapDispatch = {
   getCompanyInfo,
   fetchNews,
   getGame,
+  fetchPortfolio,
 };
 
 export default connect(

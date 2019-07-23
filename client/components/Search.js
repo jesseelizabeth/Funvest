@@ -23,7 +23,7 @@ class Search extends Component {
   }
 
   render() {
-    const { gameId } = this.props.game;
+    const { id } = this.props.game;
     return (
       <div>
         <div className="row">
@@ -37,9 +37,7 @@ class Search extends Component {
           </div>
         </div>
         <div>
-          <Link
-            to={{ pathname: `/quote/${this.state.symbol}`, state: { gameId } }}
-          >
+          <Link to={{ pathname: `/quote/${this.state.symbol}`, state: { id } }}>
             <button
               className="teal accent-3 btn-flat"
               type="submit"

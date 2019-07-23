@@ -11,12 +11,14 @@ class LoadQuote extends Component {
   }
   async componentDidMount() {
     const { stock } = this.props;
-    await fetchPrices(stock);
+    const price = await fetchPrices(stock);
+    console.log('PRICE', price);
     const color = getColor(stock.closePrice, stock.latestPrice);
     this.setState({ color });
   }
   render() {
     const { cost } = this.props;
+    console.log('THIS.PROPS.STOCK', this.props.stock);
     const { symbol, shares, latestPrice } = this.props.stock;
     const { color } = this.state;
     const currentValue = (latestPrice * shares).toFixed(2);

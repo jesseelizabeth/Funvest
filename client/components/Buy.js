@@ -20,11 +20,11 @@ class Buy extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    const { symbol, price, tradeStock, balance, gameId } = this.props;
+    const { symbol, price, tradeStock, balance, game } = this.props;
     const { shares } = this.state;
     const total = shares * price;
     if (total <= balance && shares % 1 === 0) {
-      tradeStock({ type: 'buy', symbol, shares, price }, gameId);
+      tradeStock({ type: 'buy', symbol, shares, price }, game.id);
       M.toast({
         html: `Your purchase was submitted: ${symbol} ${shares} shares`,
       });
@@ -37,6 +37,7 @@ class Buy extends Component {
   }
   render() {
     const { symbol, price, balance } = this.props;
+    console.log('BALANCE', balance);
     return (
       <div className="card-panel">
         <div className="bold">Buy {symbol}</div>
@@ -91,16 +92,11 @@ class Buy extends Component {
   }
 }
 
-const mapState = state => ({
-  gameId: state.game.selected.gameId,
-  balance: state.game.selected.balance,
-});
-
 const mapDispatch = {
   tradeStock,
 };
 
 export default connect(
-  mapState,
+  null,
   mapDispatch
 )(Buy);

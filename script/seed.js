@@ -4,7 +4,7 @@ const { green, red } = require('chalk');
 const {
   User,
   Game,
-  Player,
+  Portfolio,
   Transaction,
   Stock,
 } = require('../server/db/models');
@@ -51,32 +51,32 @@ const seed = async () => {
       name: 'Fantasy Stock',
       startingBalance: 5000,
     }),
-    Player.create({
+    Portfolio.create({
       userId: 1,
       gameId: 1,
       balance: 4000,
     }),
-    Player.create({
+    Portfolio.create({
       userId: 1,
       gameId: 2,
       balance: 5000,
     }),
-    Player.create({
+    Portfolio.create({
       userId: 2,
       gameId: 1,
       balance: 3000,
     }),
-    Player.create({
+    Portfolio.create({
       userId: 3,
       gameId: 1,
       balance: 5000,
     }),
-    Player.create({
+    Portfolio.create({
       userId: 4,
       gameId: 1,
       balance: 1000,
     }),
-    Player.create({
+    Portfolio.create({
       userId: 5,
       gameId: 1,
       balance: 500,
@@ -86,32 +86,32 @@ const seed = async () => {
       symbol: 'AAPL',
       shares: 10,
       price: 201.1,
-      playerId: 1,
+      portfolioId: 1,
     }),
     Transaction.create({
       type: 'buy',
       symbol: 'AAPL',
       shares: 2,
       price: 100.1,
-      playerId: 1,
+      portfolioId: 1,
     }),
     Transaction.create({
       type: 'buy',
       symbol: 'TWTR',
       shares: 20,
       price: 36.17,
-      playerId: 1,
+      portfolioId: 1,
     }),
     Transaction.create({
       type: 'buy',
       symbol: 'TWTR',
       shares: 10,
       price: 36.17,
-      playerId: 2,
+      portfolioId: 2,
     }),
-    Stock.create({ symbol: 'AAPL', shares: 12, playerId: 1 }),
-    Stock.create({ symbol: 'TWTR', shares: 20, playerId: 1 }),
-    Stock.create({ symbol: 'TWTR', shares: 10, playerId: 2 }),
+    Stock.create({ symbol: 'AAPL', shares: 12, portfolioId: 1 }),
+    Stock.create({ symbol: 'TWTR', shares: 20, portfolioId: 1 }),
+    Stock.create({ symbol: 'TWTR', shares: 10, portfolioId: 2 }),
   ]);
 
   console.log(green('Seeding success!'));

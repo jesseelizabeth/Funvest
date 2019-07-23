@@ -10,7 +10,7 @@ class StockInfo extends Component {
       change,
       changePercent,
     } = this.props.stock;
-    const { color, balance } = this.props;
+    const { color, balance, game } = this.props;
     return (
       <div>
         <br />
@@ -26,7 +26,12 @@ class StockInfo extends Component {
         </div>
 
         <div className="col m5">
-          <Buy symbol={symbol} price={latestPrice} balance={balance} />
+          <Buy
+            symbol={symbol}
+            price={latestPrice}
+            balance={balance}
+            game={game}
+          />
         </div>
       </div>
     );

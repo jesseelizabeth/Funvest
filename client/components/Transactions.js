@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchPortfolio } from '../store/portfolio';
 import TransactionListView from './TransactionListView';
 
 class Transactions extends Component {
+  componentDidMount() {
+    const { id } = this.props.game;
+    this.props.fetchPortfolio(id);
+  }
   render() {
-    const { transactions } = this.props;
+    const { portfolio } = this.props;
     return (
       <div>
         <div className="collection">
@@ -16,7 +22,7 @@ class Transactions extends Component {
               <div className="col m2 bold">Cost</div>
             </div>
           </div>
-          {transactions.map(transaction => (
+          {portfolio.transactions.map(transaction => (
             <div className="collection-item" key={transaction.id}>
               <TransactionListView
                 type={transaction.type}
@@ -32,4 +38,16 @@ class Transactions extends Component {
   }
 }
 
-export default Transactions;
+const mapState = state => ({
+  portfolio: state.portfolio.portfolio,
+  loading: state.portfolio.loading,
+});
+
+const mapDispatch = {
+  fetchPortfolio,
+};
+
+export default connect(
+  mapState,
+  mapDispatch
+)(Transactions);

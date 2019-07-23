@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store/user';
-import Search from './Search';
 
 class Navbar extends Component {
   constructor() {

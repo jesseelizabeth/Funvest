@@ -10,6 +10,7 @@ import games from './games';
 import game from './game';
 import player from './player';
 import news from './news';
+import players from './players';
 
 const reducer = combineReducers({
   user,
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   game,
   player,
   news,
+  players,
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 
-class LeaderboardList extends Component {
+class LeaderboardPlayer extends Component {
+  componentDidMount() {
+    const { portfolio } = this.props;
+    console.log('PORT', portfolio.stocks);
+    let value;
+    portfolio.stocks.map(stock => {
+      value += stock.totalValue;
+    });
+    console.log('VALUE', value);
+  }
   render() {
     const { player, user } = this.props;
-
     return (
-      // <LeaderboardPlayer player={player} user={user} portfolio={portfolio} />
       <div
         key={player.id}
         className={
@@ -19,4 +26,4 @@ class LeaderboardList extends Component {
   }
 }
 
-export default LeaderboardList;
+export default LeaderboardPlayer;

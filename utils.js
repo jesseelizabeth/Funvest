@@ -17,8 +17,9 @@ export const fetchPrices = async stock => {
       stock.symbol
     }/quote?displayPercent=true&token=${token.token}`
   );
-  stock.latestPrice = data.latestPrice.toFixed(2);
-  stock.closePrice = data.close.toFixed(2);
+  stock.latestPrice = Number(data.latestPrice.toFixed(2));
+  stock.closePrice = Number(data.close.toFixed(2));
+  return stock;
 };
 
 export const totalCost = transactions => {
@@ -37,4 +38,23 @@ export const totalCost = transactions => {
     }
   });
   return costs;
+};
+
+export const portfolioValue = stocks => {
+  return stocks.reduce((accum, curr) => {
+    console.log('CURR', curr.totalValue, typeof curr.totalValue);
+    return accum + curr.totalValue;
+  }, 0);
+};
+
+export const portfolioCost = transactions => {
+  let total = 0;
+  transactions.map(transaction => {
+    if (transaction.type === 'buy') {
+      total += Number(transaction.price) * Number(transaction.shares);
+    } else {
+      total -= Number(transaction.price) * Number(transaction.shares);
+    }
+  });
+  return total.toFixed(2);
 };

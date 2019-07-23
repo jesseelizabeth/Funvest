@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clearPlayer } from '../store/player';
-import { addPlayer } from '../store/game';
+import { addPlayer } from '../store/players';
 
 class Player extends Component {
   constructor() {
@@ -9,8 +9,8 @@ class Player extends Component {
     this.add = this.add.bind(this);
   }
   async add(userEmail) {
-    const { gameId } = this.props.game;
-    await this.props.addPlayer(gameId, userEmail);
+    const { id } = this.props.game;
+    await this.props.addPlayer(id, userEmail);
     this.props.clearPlayer();
   }
   render() {

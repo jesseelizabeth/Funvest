@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPlayers, getGame, getBalance } from '../store/game';
-import { fetchPortfolio, fetchTransactions } from '../store/portfolio';
+import { getGame } from '../store/game';
 import LoadingScreen from './LoadingScreen';
 import Leaderboard from './Leaderboard';
 import Transactions from './Transactions';
@@ -19,12 +18,9 @@ class GameDashboard extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
   }
-  async componentDidMount() {
+  componentDidMount() {
     const { id } = this.props.match.params;
-    await this.props.getPlayers(id);
-    await this.props.getGame(id);
-    await this.props.fetchPortfolio(id);
-    await this.props.fetchTransactions(id);
+    this.props.getGame(id);
   }
   handleClick(active) {
     if (active === 'portfolio') {
@@ -42,22 +38,13 @@ class GameDashboard extends Component {
     }
   }
   render() {
-    const {
-      loadingGame,
-      players,
-      portfolio,
-      transactions,
-      loadingPortfolio,
-      game,
-      user,
-    } = this.props;
+    const { loading, game } = this.props;
     const { active, portfolioColor, transactionsColor } = this.state;
-    const { name } = this.props.location.state;
-    if (loadingGame || loadingPortfolio) return <LoadingScreen />;
+    if (loading) return <LoadingScreen />;
     return (
       <div>
         <div className="row">
-          <h5 className="center-align bold">{name}</h5>
+          <h5 className="center-align bold">{game.name}</h5>
         </div>
         <div className="divider" />
         <br />
@@ -68,15 +55,11 @@ class GameDashboard extends Component {
                 <Search game={game} />
               </div>
               <div className="card-panel z-depth-0 grey lighten-5">
-                <AddPlayers />
+                <AddPlayers game={game} />
               </div>
             </div>
             <div className="col l4 offset-l2 z-depth-2">
-              <Leaderboard
-                players={players}
-                user={user}
-                gameId={this.props.match.params}
-              />
+              <Leaderboard game={game} />
             </div>
           </div>
           <div className="row">
@@ -96,12 +79,9 @@ class GameDashboard extends Component {
           <div className="row">
             <div className="col s12">
               {active === 'portfolio' ? (
-                <Portfolio portfolio={portfolio} transactions={transactions} />
+                <Portfolio game={game} />
               ) : (
-                <Transactions
-                  transactions={transactions}
-                  loading={loadingPortfolio}
-                />
+                <Transactions game={game} />
               )}
             </div>
           </div>
@@ -113,20 +93,12 @@ class GameDashboard extends Component {
 
 const mapState = state => ({
   game: state.game.selected,
-  players: state.game.players,
-  loadingGame: state.game.loading,
-  portfolio: state.portfolio.stocks,
-  transactions: state.portfolio.transactions,
-  loadingPortfolio: state.portfolio.loading,
+  loading: state.game.loading,
   user: state.user,
 });
 
 const mapDispatch = {
-  getPlayers,
   getGame,
-  fetchPortfolio,
-  fetchTransactions,
-  getBalance,
 };
 
 export default connect(

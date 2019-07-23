@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { searchPlayer, clearPlayer } from '../store/player';
-import { addPlayer } from '../store/game';
+import { addPlayer } from '../store/players';
 import LoadingScreen from './LoadingScreen';
 import Player from './Player';
 
@@ -64,7 +64,6 @@ class AddPlayers extends Component {
 const mapState = state => ({
   player: state.player.selected,
   loading: state.player.loading,
-  game: state.game.selected,
 });
 
 const mapDispatch = {

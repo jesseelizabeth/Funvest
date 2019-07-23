@@ -3,9 +3,6 @@ import axios from 'axios';
 // action types
 const LOADING_PORTFOLIO = 'LOADING_PORTFOLIO';
 const GET_PORTFOLIO = 'GET_PORTFOLIO';
-
-const LOADING_TRANSACTIONS = 'LOADING_TRANSACTIONS';
-const FETCH_TRANSACTIONS = 'FETCH_TRANSACTIONS';
 const TRADE_STOCK = 'TRADE_STOCK';
 
 // action creators
@@ -16,15 +13,6 @@ const loadingPortfolio = () => ({
 const gotPortfolio = portfolio => ({
   type: GET_PORTFOLIO,
   portfolio,
-});
-
-const loadingTransactions = () => ({
-  type: LOADING_TRANSACTIONS,
-});
-
-const gotTransactions = transactions => ({
-  type: FETCH_TRANSACTIONS,
-  transactions,
 });
 
 const tradedStock = transaction => ({
@@ -39,12 +27,6 @@ export const fetchPortfolio = gameId => async dispatch => {
   dispatch(gotPortfolio(data));
 };
 
-export const fetchTransactions = gameId => async dispatch => {
-  dispatch(loadingTransactions());
-  const { data } = await axios.get(`/api/games/${gameId}/transactions`);
-  dispatch(gotTransactions(data));
-};
-
 export const tradeStock = (transaction, gameId) => async dispatch => {
   const { data } = await axios.post(
     `/api/games/${gameId}/transactions`,
@@ -55,8 +37,7 @@ export const tradeStock = (transaction, gameId) => async dispatch => {
 
 // initial state
 const initialState = {
-  stocks: [],
-  transactions: [],
+  portfolio: {},
   loading: false,
 };
 
@@ -66,13 +47,9 @@ export default function(state = initialState, action) {
     case LOADING_PORTFOLIO:
       return { ...state, loading: true };
     case GET_PORTFOLIO:
-      return { ...state, stocks: action.portfolio, loading: false };
-    case LOADING_TRANSACTIONS:
-      return { ...state, loading: true };
-    case FETCH_TRANSACTIONS:
-      return { ...state, transactions: action.transactions, loading: false };
+      return { ...state, portfolio: action.portfolio, loading: false };
     case TRADE_STOCK: {
-      let updatedStocks = state.stocks.filter(stock => {
+      let updatedStocks = state.portfolio.stocks.filter(stock => {
         if (stock.symbol === action.transaction.symbol) {
           action.transaction.type === 'buy'
             ? (stock.shares += action.transaction.shares)
@@ -82,8 +59,11 @@ export default function(state = initialState, action) {
       });
       return {
         ...state,
-        stocks: updatedStocks,
-        transactions: [...state.transactions, action.transaction],
+        portfolio: {
+          ...state.portfolio,
+          stocks: updatedStocks,
+          transactions: action.transaction,
+        },
         loading: false,
       };
     }
