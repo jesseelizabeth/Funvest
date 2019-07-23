@@ -19,6 +19,8 @@ module.exports = token
 
 ## Built with
 * ```Node.js```, ```Express```, ```PostgreSQL```, ```Sequelize```
+* ```React``` and ```Redux```
+* ```Materialize css``
 * ```Passport``` for authentication
 * ```IEX Cloud API```
 
